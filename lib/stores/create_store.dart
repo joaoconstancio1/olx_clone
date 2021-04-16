@@ -107,8 +107,9 @@ abstract class _CreateStore with Store {
   }
 
   bool get priceValid => price != null && price <= 9999999;
+
   String get priceError {
-    if ( !showErrors || priceValid)
+    if (!showErrors || priceValid)
       return null;
     else if (priceText.isEmpty)
       return 'Campo obrigatório';
@@ -122,9 +123,14 @@ abstract class _CreateStore with Store {
   @action
   void setHidePhone(bool value) => hidePhone = value;
 
-
   @computed
-  bool get formValid => imagesValid && titleValid && descriptionValid && categoryValid && addressValid && priceValid;
+  bool get formValid =>
+      imagesValid &&
+      titleValid &&
+      descriptionValid &&
+      categoryValid &&
+      addressValid &&
+      priceValid;
 
   @computed
   Function get sendPressed => formValid ? _send : null;
@@ -135,8 +141,14 @@ abstract class _CreateStore with Store {
   @action
   void invalidSendPressed() => showErrors = true;
 
+  @observable
+  bool loading = false;
 
-  void _send(){
+  @observable
+  String error;
+
+  @action
+  Future<void> _send() async {
     final ad = Ad();
     ad.title = title;
     ad.description = description;
@@ -147,7 +159,13 @@ abstract class _CreateStore with Store {
     ad.address = address;
     ad.user = GetIt.I<UserManagerStore>().user;
 
-    AdRepository().save(ad);
 
+    loading = true;
+    try {
+      final response = await AdRepository().save(ad);
+    }catch (e){
+      error = e;
+    }
+    loading = false;
   }
 }
