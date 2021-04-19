@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xlo_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:xlo_mobx/screens/home/components/search_dialog.dart';
+import 'package:xlo_mobx/screens/home/components/top_bar.dart';
 import 'package:xlo_mobx/stores/home_store.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,6 +22,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: CustomDrawer(),
         appBar: AppBar(
           title: Observer(
             builder: (_) {
@@ -55,7 +57,11 @@ class HomeScreen extends StatelessWidget {
             })
           ],
         ),
-        drawer: CustomDrawer(),
+          body: Column(
+            children: [
+              TopBar(),
+            ],
+          ),
       ),
     );
   }
