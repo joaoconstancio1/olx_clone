@@ -7,7 +7,6 @@ import 'package:xlo_mobx/repositories/parse_errors.dart';
 import 'package:xlo_mobx/repositories/table_keys.dart';
 
 class AdRepository {
-
   Future<void> save(Ad ad) async {
     try {
       final parseImages = await saveImages(ad.images);
@@ -37,17 +36,14 @@ class AdRepository {
       adObject.set<ParseUser>(keyAdOwner, parseUser);
 
       adObject.set<ParseObject>(keyAdCategory,
-          ParseObject(keyCategoryTable)
-            ..set(keyCategoryId, ad.category.id));
+          ParseObject(keyCategoryTable)..set(keyCategoryId, ad.category.id));
 
       final response = await adObject.save();
 
-      if (response.success) {
-        return response.result;
-      } else {
+      if (!response.success) {
         return Future.error(ParseErrors.getDescription(response.error.code));
       }
-    }catch (e){
+    } catch (e) {
       return Future.error("Falha ao salvar anúncio");
     }
   }
