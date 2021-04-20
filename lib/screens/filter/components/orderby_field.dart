@@ -13,7 +13,7 @@ class OrderByField extends StatelessWidget {
     Widget buildOption(String title, OrderBy option) {
       return GestureDetector(
         onTap: () {
-          filter.setOrderByOrderByDate(option);
+          filter.serOrderBy(option);
         },
         child: Container(
           height: 50,
@@ -22,7 +22,7 @@ class OrderByField extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
             color:
-                filter.orderBy == option ? Colors.purple : Colors.transparent,
+            filter.orderBy == option ? Colors.purple : Colors.transparent,
             border: Border.all(
               color: filter.orderBy == option ? Colors.purple : Colors.grey,
             ),
@@ -30,7 +30,8 @@ class OrderByField extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-                color: filter.orderBy == option ? Colors.white : Colors.black),
+              color: filter.orderBy == option ? Colors.white : Colors.black,
+            ),
           ),
         ),
       );
@@ -39,18 +40,16 @@ class OrderByField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SectionTitle("Ordernar por"),
+        SectionTitle('Ordernar por'),
         Observer(builder: (_) {
           return Row(
             children: [
               buildOption('Data', OrderBy.DATE),
-              const SizedBox(
-                width: 12,
-              ),
+              const SizedBox(width: 12),
               buildOption('Preço', OrderBy.PRICE),
             ],
           );
-        })
+        }),
       ],
     );
   }
