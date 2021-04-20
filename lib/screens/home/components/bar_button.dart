@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BarButton extends StatelessWidget {
-
-  BarButton({this.decoration,this.label, this.onTap});
+  BarButton({this.label, this.decoration, this.onTap});
 
   final String label;
   final BoxDecoration decoration;
@@ -12,7 +11,7 @@ class BarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: InkWell(
-        onTap: (){},
+        onTap: onTap,
         child: Container(
           height: 40,
           alignment: Alignment.center,
@@ -20,7 +19,10 @@ class BarButton extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
