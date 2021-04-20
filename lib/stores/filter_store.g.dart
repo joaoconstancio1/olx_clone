@@ -23,6 +23,13 @@ mixin _$FilterStore on _FilterStore, Store {
           () => super.isTypeParticular,
           name: '_FilterStore.isTypeParticular'))
       .value;
+  Computed<bool> _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_FilterStore.isFormValid'))
+          .value;
 
   final _$orderByAtom = Atom(name: '_FilterStore.orderBy');
 
@@ -87,11 +94,11 @@ mixin _$FilterStore on _FilterStore, Store {
   final _$_FilterStoreActionController = ActionController(name: '_FilterStore');
 
   @override
-  void setOrderByOrderByDate(OrderBy value) {
+  void serOrderBy(OrderBy value) {
     final _$actionInfo = _$_FilterStoreActionController.startAction(
-        name: '_FilterStore.setOrderByOrderByDate');
+        name: '_FilterStore.serOrderBy');
     try {
-      return super.setOrderByOrderByDate(value);
+      return super.serOrderBy(value);
     } finally {
       _$_FilterStoreActionController.endAction(_$actionInfo);
     }
@@ -138,7 +145,8 @@ minPrice: ${minPrice},
 maxPrice: ${maxPrice},
 vendorType: ${vendorType},
 priceError: ${priceError},
-isTypeParticular: ${isTypeParticular}
+isTypeParticular: ${isTypeParticular},
+isFormValid: ${isFormValid}
     ''';
   }
 }

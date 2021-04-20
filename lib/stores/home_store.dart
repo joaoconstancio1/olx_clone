@@ -1,12 +1,13 @@
 import 'package:mobx/mobx.dart';
 import 'package:xlo_mobx/models/category.dart';
+import 'package:xlo_mobx/stores/filter_store.dart';
 
 part 'home_store.g.dart';
 
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
-  
+
   @observable
   String search ='' ;
 
@@ -18,5 +19,13 @@ abstract class _HomeStore with Store {
 
   @action
   void setCategory(Category value) => category = value;
+
+  @observable
+  FilterStore filter = FilterStore();
+
+  FilterStore get clonedFilter => filter.clone();
+
+  @action
+  void setFilter(FilterStore value) => filter  = value;
 
 }
