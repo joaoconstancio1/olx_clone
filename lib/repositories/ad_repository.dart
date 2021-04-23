@@ -14,12 +14,15 @@ class AdRepository {
     FilterStore filter,
     String search,
     Category category,
+    int page,
   }) async {
     try {
       final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
 
       queryBuilder.includeObject([keyAdOwner, keyAdCategory]);
 
+
+      queryBuilder.setAmountToSkip(page * 10);
       queryBuilder.setLimit(10);
 
       queryBuilder.whereEqualTo(keyAdStatus, AdStatus.ACTIVE.index);
