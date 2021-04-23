@@ -21,9 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
   openSearch(BuildContext context) async {
     final search = await showDialog(
       context: context,
-      builder: (_) => SearchDialog(
-        currentSearch: homeStore.search,
-      ),
+      builder: (_) =>
+          SearchDialog(
+            currentSearch: homeStore.search,
+          ),
     );
     if (search != null) homeStore.setSearch(search);
   }
@@ -99,51 +100,53 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       );
-                    if (homeStore.loading)
+                    if (homeStore.showProgress)
                       return Center(
                         child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(Colors.white),
                         ),
                       );
                     if (homeStore.adList.isEmpty)
-                      return
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.error,
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.error,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Nenhum anúncio encontrado.!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
                                 color: Colors.white,
-                                size: 100,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
                               ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                'Nenhum anúncio encontrado.!',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                            ),
+                          ],
+                        ),
+                      );
                     return ListView.builder(
                       controller: scrollController,
-                      itemCount: homeStore.adList.length,
+                      itemCount: homeStore.itemCount,
                       itemBuilder: (_, index) {
                         if (index < homeStore.adList.length)
                           return AdTile(homeStore.adList[index]);
-
-
+                        homeStore.loadNextPage();
+                        return Container(
+                          height: 10,
+                          child: LinearProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.purple),),
+                        );
                       },
                     );
                   }),
-
                 ],
               ),
             ),
