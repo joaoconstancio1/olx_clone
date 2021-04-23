@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:xlo_mobx/repositories/category_repository.dart';
 import 'package:xlo_mobx/repositories/cep_repository.dart';
@@ -34,7 +35,6 @@ Future<void> initializeParse() async {
       clientKey: "tUVZ4LJ2fNR7GvIw4LKEy7QJPCqzoSPyviXskdLz",
       autoSendSessionId: true,
       debug: true);
-
 }
 
 
@@ -56,6 +56,12 @@ class MyApp extends StatelessWidget {
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        supportedLocales: const [Locale('pt', 'BR')],
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
         home: BaseScreen());
   }
 }
